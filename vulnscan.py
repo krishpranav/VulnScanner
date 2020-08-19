@@ -1,18 +1,5 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
-#                               __         __
-#                              /__)_   '_/(  _ _
-#                             / ( (//)/(/__)( (//)
-#                                  /
-#
-# Author	 : Shankar Damodaran
-# Tool 		 : RapidScan
-# Usage		 : ./rapidscan.py example.com (or) python rapidsan.py example.com
-# Description: This scanner automates the process of security scanning by using a
-#              multitude of available linux security tools and some custom scripts.
-#
-
-# Importing the libraries
+#!usr/bin/env/python
+#VulnScan
 import sys
 import socket
 import subprocess
