@@ -9,6 +9,6 @@ Steps to run this tool:
     <a href="https://krishpranav.github.io/">CLICK HERE TO GO THE MY WEBSITE</a>
     
  
-    NOTE: This tool is under development
+    NOTE: THIS TOOL IS UNDER DEVELOPMENT
     
     TOOL IS CREATED BY KRISNA PRANAV 
