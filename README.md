@@ -5,7 +5,7 @@ Steps to run this tool:
     1. git clone https://github.com/krishpranav/VulnScanner
     2. cd VulnScanner
     3. sudo chmod 777 *
-    4. python vulnscan.py    or   sudo ./vulnscan.py
+    4. python vulnscan.py    or   sudo ./vulnscan.py \n
     <a href="https://krishpranav.github.io/">CLICK HERE TO GO THE MY WEBSITE</a>
     
     NOTE: This tool is under development
