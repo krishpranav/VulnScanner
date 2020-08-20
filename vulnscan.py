@@ -13,8 +13,7 @@ import re
 from urlparse import urlsplit
 
 
-
-# Scan Time Elapser
+ 
 intervals = (
     ('h', 3600),
     ('m', 60),
