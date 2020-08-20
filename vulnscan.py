@@ -626,6 +626,36 @@ tools_fix = [
 							"Exposing SMB Service to the outside world is a bad idea, it is recommended to install latest patches for the service in order not to get compromised. The following resource provides a detailed information on SMB Hardening concepts.  "]
 			]
 
-  
+ 
 
+# Tool Set
+tools_precheck = [
+					["wapiti"], ["whatweb"], ["nmap"], ["golismero"], ["host"], ["wget"], ["uniscan"], ["wafw00f"], ["dirb"], ["davtest"], ["theHarvester"], ["xsser"], ["dnsrecon"],["fierce"], ["dnswalk"], ["whois"], ["sslyze"], ["lbd"], ["golismero"], ["dnsenum"],["dmitry"], ["davtest"], ["nikto"], ["dnsmap"]
+			     ]
+
+# Shuffling Scan Order (starts)
+scan_shuffle = list(zip(tool_names, tool_cmd, tool_resp, tool_status))
+random.shuffle(scan_shuffle)
+tool_names, tool_cmd, tool_resp, tool_status = zip(*scan_shuffle)
+tool_checks = (len(tool_names) + len(tool_resp) + len(tool_status)) / 3 # Cross verification incase, breaks.
+# Shuffling Scan Order (ends)
+
+# Tool Head Pointer: (can be increased but certain tools will be skipped)
+tool = 0
+
+# Run Test
+runTest = 1
+
+# For accessing list/dictionary elements
+arg1 = 0
+arg2 = 1
+arg3 = 2
+arg4 = 3
+arg5 = 4
+arg6 = 5
+
+# Detected Vulnerabilities [will be dynamically populated]
+rs_vul_list = list()
+rs_vul_num = 0
+rs_vul = 0
 
