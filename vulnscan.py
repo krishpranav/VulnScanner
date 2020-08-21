@@ -659,3 +659,36 @@ rs_vul_list = list()
 rs_vul_num = 0
 rs_vul = 0
 
+# Total Time Elapsed
+rs_total_elapsed = 0
+
+# Tool Pre Checker
+rs_avail_tools = 0
+
+# Checks Skipped
+rs_skipped_checks = 0
+
+
+if len(sys.argv) == 1 :
+    logo()
+    helper()
+else:
+    target = sys.argv[1].lower()
+
+
+    if target == '--update' or target == '-u' or target == '--u':
+    	logo()
+        print "VulnScanner is updating....Please wait.\n"
+        spinner.start()
+        # Checking internet connectivity first...
+        rs_internet_availability = check_internet()
+        if rs_internet_availability == 0:
+            print "\t"+ bcolors.BG_ERR_TXT + "There seems to be some problem connecting to the internet. Please try again or later." +bcolors.ENDC
+            spinner.stop()
+            sys.exit(1)
+        cmd = 'sha1sum rapidscan.py | grep .... | cut -c 1-40'
+        oldversion_hash = subprocess.check_output(cmd, shell=True)
+        oldversion_hash = oldversion_hash.strip()
+        os.system('wget -N https://raw.githubusercontent.com/skavngr/rapidscan/master/rapidscan.py -O rapidscan.py > /dev/null 2>&1')
+        newversion_hash = subprocess.check_output(cmd, shell=True)
+        newversion_hash = newversion_hash.strip()
