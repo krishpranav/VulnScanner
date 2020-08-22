@@ -692,3 +692,40 @@ else:
         os.system('wget -N https://raw.githubusercontent.com/krishpranav/VulnScanner/master/vulnscan.py -O vulnscan.py > /dev/null 2>&1')
         newversion_hash = subprocess.check_output(cmd, shell=True)
         newversion_hash = newversion_hash.strip()
+#!usr/bin/env/python
+#vulnscan continution
+#please use this tool for scanning for vulnerabilites and report it to the particular website
+#please don't use for your purpose
+
+        if oldversion_hash == newversion_hash :
+            clear()
+            print "\t"+ bcolors.OKBLUE +"You already have the latest version of RapidScan." + bcolors.ENDC
+        else:
+            clear()
+            print "\t"+ bcolors.OKGREEN +"RapidScan successfully updated to the latest version." +bcolors.ENDC
+        spinner.stop()
+        sys.exit(1)
+
+    elif target == '--help' or target == '-h' or target == '--h':
+    	logo()
+        helper()
+        sys.exit(1)
+    else:
+
+        target = url_maker(target)
+        os.system('rm te* > /dev/null 2>&1') # Clearing previous scan files
+        os.system('clear')
+        os.system('setterm -cursor off')
+        logo()
+        print bcolors.BG_HEAD_TXT+"[ Checking Available Security Scanning Tools Phase... Initiated. ]"+bcolors.ENDC
+        unavail_tools = 0
+        unavail_tools_names = list()
+        while (rs_avail_tools < len(tools_precheck)):
+			precmd = str(tools_precheck[rs_avail_tools][arg1])
+			try:
+				p = subprocess.Popen([precmd], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE,shell=True)
+				output, err = p.communicate()
+				val = output + err
+			except:
+				print "\t"+bcolors.BG_ERR_TXT+"RapidScan was terminated abruptly..."+bcolors.ENDC
+				sys.exit(1)
