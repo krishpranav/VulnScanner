@@ -670,7 +670,6 @@ rs_skipped_checks = 0
 
 
 if len(sys.argv) == 1 :
-    logo()
     helper()
 else:
     target = sys.argv[1].lower()
@@ -702,7 +701,7 @@ else:
         sys.exit(1)
 
     elif target == '--help' or target == '-h' or target == '--h':
-    	logo()
+    	 
         helper()
         sys.exit(1)
     else:
