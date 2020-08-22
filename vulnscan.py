@@ -692,11 +692,6 @@ else:
         os.system('wget -N https://raw.githubusercontent.com/krishpranav/VulnScanner/master/vulnscan.py -O vulnscan.py > /dev/null 2>&1')
         newversion_hash = subprocess.check_output(cmd, shell=True)
         newversion_hash = newversion_hash.strip()
-#!usr/bin/env/python
-#vulnscan continution
-#please use this tool for scanning for vulnerabilites and report it to the particular website
-#please don't use for your purpose
-
         if oldversion_hash == newversion_hash :
             clear()
             print "\t"+ bcolors.OKBLUE +"You already have the latest version of RapidScan." + bcolors.ENDC
