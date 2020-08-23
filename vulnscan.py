@@ -723,3 +723,78 @@ else:
 			except:
 				print "\t"+bcolors.BG_ERR_TXT+"RapidScan was terminated abruptly..."+bcolors.ENDC
 				sys.exit(1)
+#!usr/bin/env/python
+			if "not found" in val:
+				print "\t"+bcolors.OKBLUE+tools_precheck[rs_avail_tools][arg1]+bcolors.ENDC+bcolors.BADFAIL+"...unavailable."+bcolors.ENDC
+				for scanner_index, scanner_val in enumerate(tool_names):
+					if scanner_val[2] == tools_precheck[rs_avail_tools][arg1]:
+						scanner_val[3] = 0 # disabling scanner as it's not available.
+						unavail_tools_names.append(tools_precheck[rs_avail_tools][arg1])
+						unavail_tools = unavail_tools + 1
+			else:
+				print "\t"+bcolors.OKBLUE+tools_precheck[rs_avail_tools][arg1]+bcolors.ENDC+bcolors.OKGREEN+"...available."+bcolors.ENDC
+			rs_avail_tools = rs_avail_tools + 1
+			clear()
+        unavail_tools_names = list(set(unavail_tools_names))
+        if unavail_tools == 0:
+        	print "\t"+bcolors.OKGREEN+"All Scanning Tools are available. All vulnerability checks will be performed by RapidScan."+bcolors.ENDC
+        else:
+        	print "\t"+bcolors.WARNING+"Some of these tools "+bcolors.BADFAIL+str(unavail_tools_names)+bcolors.ENDC+bcolors.WARNING+" are unavailable. RapidScan can still perform tests by excluding these tools from the tests. Please install these tools to fully utilize the functionality of RapidScan."+bcolors.ENDC
+        print bcolors.BG_ENDL_TXT+"[ Checking Available Security Scanning Tools Phase... Completed. ]"+bcolors.ENDC
+        print "\n"
+        print bcolors.BG_HEAD_TXT+"[ Preliminary Scan Phase Initiated... Loaded "+str(tool_checks)+" vulnerability checks.  ]"+bcolors.ENDC
+        #while (tool < 1):
+        while(tool < len(tool_names)):
+            print "["+tool_status[tool][arg3]+tool_status[tool][arg4]+"] Deploying "+str(tool+1)+"/"+str(tool_checks)+" | "+bcolors.OKBLUE+tool_names[tool][arg2]+bcolors.ENDC,
+            if tool_names[tool][arg4] == 0:
+            	print bcolors.WARNING+"...Scanning Tool Unavailable. Auto-Skipping Test..."+bcolors.ENDC
+		rs_skipped_checks = rs_skipped_checks + 1
+            	tool = tool + 1
+            	continue
+            spinner.start()
+            scan_start = time.time()
+            temp_file = "temp_"+tool_names[tool][arg1]
+            cmd = tool_cmd[tool][arg1]+target+tool_cmd[tool][arg2]+" > "+temp_file+" 2>&1"
+
+            try:
+                subprocess.check_output(cmd, shell=True)
+            except KeyboardInterrupt:
+                runTest = 0
+            except:
+                runTest = 1
+
+            if runTest == 1:
+                    spinner.stop()
+                    scan_stop = time.time()
+                    elapsed = scan_stop - scan_start
+                    rs_total_elapsed = rs_total_elapsed + elapsed
+                    print bcolors.OKBLUE+"\b...Completed in "+display_time(int(elapsed))+bcolors.ENDC+"\n"
+                    clear()
+                    rs_tool_output_file = open(temp_file).read()
+                    if tool_status[tool][arg2] == 0:
+                    	if tool_status[tool][arg1].lower() in rs_tool_output_file.lower():
+                        	#print "\t"+ vul_info(tool_resp[tool][arg2]) + bcolors.BADFAIL +" "+ tool_resp[tool][arg1] + bcolors.ENDC
+                        	vul_remed_info(tool,tool_resp[tool][arg2],tool_resp[tool][arg3])
+                        	rs_vul_list.append(tool_names[tool][arg1]+"*"+tool_names[tool][arg2])
+                    else:
+                    	if any(i in rs_tool_output_file for i in tool_status[tool][arg6]):
+                    		m = 1 # This does nothing.
+                    	else:
+                        	#print "\t"+ vul_info(tool_resp[tool][arg2]) + bcolors.BADFAIL +" "+ tool_resp[tool][arg1] + bcolors.ENDC
+                        	vul_remed_info(tool,tool_resp[tool][arg2],tool_resp[tool][arg3])
+                        	rs_vul_list.append(tool_names[tool][arg1]+"*"+tool_names[tool][arg2])
+            else:
+                    runTest = 1
+                    spinner.stop()
+                    scan_stop = time.time()
+                    elapsed = scan_stop - scan_start
+                    rs_total_elapsed = rs_total_elapsed + elapsed
+                    print bcolors.OKBLUE+"\b\b\b\b...Interrupted in "+display_time(int(elapsed))+bcolors.ENDC+"\n"
+                    clear()
+                    print "\t"+bcolors.WARNING + "Test Skipped. Performing Next. Press Ctrl+Z to Quit RapidScan." + bcolors.ENDC
+                    rs_skipped_checks = rs_skipped_checks + 1
+
+            tool=tool+1
+
+        print bcolors.BG_ENDL_TXT+"[ Preliminary Scan Phase Completed. ]"+bcolors.ENDC
+        print "\n"
