@@ -723,7 +723,7 @@ else:
 			except:
 				print "\t"+bcolors.BG_ERR_TXT+"RapidScan was terminated abruptly..."+bcolors.ENDC
 				sys.exit(1)
-#!usr/bin/env/python
+				
 			if "not found" in val:
 				print "\t"+bcolors.OKBLUE+tools_precheck[rs_avail_tools][arg1]+bcolors.ENDC+bcolors.BADFAIL+"...unavailable."+bcolors.ENDC
 				for scanner_index, scanner_val in enumerate(tool_names):
